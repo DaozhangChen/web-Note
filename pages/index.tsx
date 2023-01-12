@@ -6,7 +6,7 @@ import Note from '../components/note'
 import s from '../styles/index.module.scss'
 
 export default function Home() {
-  const list = [
+  const baseList = [
     { id: 1, top: 10, left: 20, text: '31231321' },
     { id: 2, top: 10, left: 270, text: '64' },
     { id: 3, top: 10, left: 530, text: '64654654' },
@@ -19,6 +19,7 @@ export default function Home() {
     { id: 10, top: 600, left: 270, text: '4654654' },
     { id: 11, top: 600, left: 800, text: '3232465464' }
   ]
+  const [list, setList] = useState(baseList)
   const [width, setWidth] = useState<number>()
   const [limitList, setLimitList] = useState<number>()
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function Home() {
         </div>
         <NavBar />
         <div className={s.noteWrapper}>
-          {list.map(note => <Note key={note.id} top={note.top} left={note.left} text={note.text} />)}
+          {list.map(note => <Note key={note.id} changeText={setList} top={note.top} left={note.left} text={note.text} />)}
         </div>
       </main>
     </>

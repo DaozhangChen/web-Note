@@ -14,10 +14,10 @@ interface noteListData {
 
 export default function Home() {
   const baseList = [
-    { id: 1, top: 10, left: 20, text: '31231321', height: 100 },
-    { id: 2, top: 10, left: 270, text: '64', height: 150 },
-    { id: 3, top: 10, left: 530, text: '64654654', height: 200 },
-    { id: 4, top: 10, left: 800, text: '13213', height: 300 },
+    { id: 1, top: 0, left: 20, text: '31231321', height: 100 },
+    { id: 2, top: 0, left: 270, text: '64', height: 150 },
+    { id: 3, top: 0, left: 530, text: '64654654', height: 200 },
+    { id: 4, top: 0, left: 800, text: '13213', height: 300 },
     { id: 5, top: 300, left: 20, text: '654654', height: 150 },
     { id: 6, top: 300, left: 270, text: '654654', height: 112 },
     { id: 7, top: 300, left: 530, text: '1321321', height: 130 },
@@ -39,8 +39,8 @@ export default function Home() {
   useEffect(() => {
     if (noteListData.width) {
       setNoteListData(list => {
-        const count = Math.floor(list.width / 250)
-        const width = (list.width - 40 - count * 250) / count
+        const count = Math.floor((list.width - 20) / 250)
+        const width = (list.width - count * 250) / (count + 2)
         let leftArray = []
         let currentLeft = width
         for (let i = 0; i < count; i++) {
@@ -56,10 +56,10 @@ export default function Home() {
     let count = 0
     let heightArray: number[] = []
     const a = list.map(noteList => {
-      if (count < 4) {
-        heightArray.push(noteList.height)
+      if (count < leftArray.length) {
+        heightArray.push(baseList[count].top + noteList.height)
         ++count
-        return { ...noteList, left: leftArray[count - 1] }
+        return { ...noteList, top: 10, left: leftArray[count - 1] }
       } else {
         const i = count % heightArray.length
         const height = heightArray[i]

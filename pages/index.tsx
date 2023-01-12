@@ -20,6 +20,8 @@ export default function Home() {
         <NavBar />
         <div className={s.noteWrapper}>
           <Note />
+          <Note />
+          <Note />
         </div>
       </main>
     </>

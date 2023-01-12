@@ -10,11 +10,11 @@
     -webkit-backdrop-filter: blur(9px);
     backdrop-filter: blur(9px);
     color: white;
+    box-shadow: rgba(255, 202, 206, 0.4) 0px 5px, rgba(255, 202, 206, 0.3) 0px 10px, rgba(255, 202, 206, 0.2) 0px 15px, rgba(255, 202, 206, 0.1) 0px 20px, rgba(255, 202, 206, 0.05) 0px 25px;
 
     & span {
-        margin-right: 10px;
+        margin-right: 20px;
     }
-
 
     & button {
         cursor: pointer;
@@ -22,6 +22,7 @@
         border: 1px solid white;
         font-size: 18px;
         border-radius: 5px;
-        padding: 5px 10px;
+        padding: 3px 10px;
+        box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
     }
 }

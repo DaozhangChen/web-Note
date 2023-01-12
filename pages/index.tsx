@@ -22,6 +22,12 @@ export default function Home() {
           <Note />
           <Note />
           <Note />
+          <Note />
+          <Note />
+          <Note />
+          <Note />
+          <Note />
+          <Note />
         </div>
       </main>
     </>

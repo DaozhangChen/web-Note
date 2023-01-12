@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import NavBar from '../components/navBar'
+import Note from '../components/note'
 import s from '../styles/index.module.scss'
 
 export default function Home() {
@@ -15,7 +16,9 @@ export default function Home() {
       <main className={s.wrapper}>
         <Image src="/background.svg" alt='背景图片' fill priority property="true" />
         <NavBar />
-        <h1>Hello World</h1>
+        <div className={s.noteWrapper}>
+          <Note />
+        </div>
       </main>
     </>
   )

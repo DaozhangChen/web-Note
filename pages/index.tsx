@@ -1,5 +1,7 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import NavBar from '../components/navBar'
+import s from '../styles/index.module.scss'
 
 export default function Home() {
   return (
@@ -10,7 +12,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className={s.wrapper}>
+        <Image src="/background.jpg" alt='背景图片' fill priority property="true" />
         <NavBar />
         <h1>Hello World</h1>
       </main>

@@ -1,17 +1,25 @@
 .wrapper {
     height: 50px;
     width: 100vw;
-    border: 1px solid red;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 40px;
     font-size: 18px;
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    border-bottom: 1px solid white;
+    -webkit-backdrop-filter: blur(9px);
+    backdrop-filter: blur(9px);
+    color: white;
+
+    & span {
+        margin-right: 10px;
+    }
 
 
     & button {
+        cursor: pointer;
+        color: white;
+        border: 1px solid white;
         font-size: 18px;
         border-radius: 5px;
         padding: 5px 10px;

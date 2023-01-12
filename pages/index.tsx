@@ -13,7 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={s.wrapper}>
-        <Image src="/background.jpg" alt='背景图片' fill priority property="true" />
+        <Image src="/background.svg" alt='背景图片' fill priority property="true" />
         <NavBar />
         <h1>Hello World</h1>
       </main>

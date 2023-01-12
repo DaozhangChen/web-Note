@@ -14,7 +14,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={s.wrapper}>
-        <Image src="/background.svg" alt='背景图片' fill priority property="true" />
+        <div className={s.background}>
+          <Image src="/background.svg" alt='背景图片' fill priority property="true" />
+        </div>
         <NavBar />
         <div className={s.noteWrapper}>
           <Note />

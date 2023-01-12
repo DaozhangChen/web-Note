@@ -1,10 +1,42 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import NavBar from '../components/navBar'
 import Note from '../components/note'
 import s from '../styles/index.module.scss'
 
 export default function Home() {
+  const list = [
+    { id: 1, top: 10, left: 20, text: '31231321' },
+    { id: 2, top: 10, left: 270, text: '64' },
+    { id: 3, top: 10, left: 530, text: '64654654' },
+    { id: 4, top: 10, left: 800, text: '13213' },
+    { id: 5, top: 300, left: 20, text: '654654' },
+    { id: 6, top: 300, left: 270, text: '654654' },
+    { id: 7, top: 300, left: 530, text: '1321321' },
+    { id: 8, top: 300, left: 800, text: '645654' },
+    { id: 9, top: 600, left: 20, text: '65465487' },
+    { id: 10, top: 600, left: 270, text: '4654654' },
+    { id: 11, top: 600, left: 800, text: '3232465464' }
+  ]
+  const [width, setWidth] = useState<number>()
+  const [limitList, setLimitList] = useState<number>()
+  useEffect(() => {
+    setWidth(window.innerWidth)
+    window.addEventListener('resize', () => {
+      setWidth(window.innerWidth)
+    })
+  }, [])
+  useEffect(() => {
+    console.log(width)
+    if (width) {
+      setLimitList(Math.floor(width - 20 / 250))
+    }
+  }, [width])
+  useEffect(() => {
+
+  }, [limitList])
+
   return (
     <>
       <Head>
@@ -19,15 +51,7 @@ export default function Home() {
         </div>
         <NavBar />
         <div className={s.noteWrapper}>
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
+          {list.map(note => <Note key={note.id} top={note.top} left={note.left} text={note.text} />)}
         </div>
       </main>
     </>

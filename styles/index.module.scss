@@ -14,19 +14,28 @@
         }
     }
 
+    // & .noteWrapper {
+    //     height: calc(100vh - 50px);
+    //     overflow: scroll;
+    //     margin-top: 50px;
+    //     display: grid;
+    //     grid-template-columns: repeat(auto-fill, 250px);
+    //     grid-template-rows: auto;
+    //     grid-auto-flow: dense;
+    //     grid-auto-rows: auto;
+    //     align-items: start;
+    //     row-gap: 10px;
+    //     column-gap: 10px;
+    //     padding: 10px 10px;
+    //     justify-content: center;
+    // }
+
     & .noteWrapper {
         height: calc(100vh - 50px);
         overflow: scroll;
         margin-top: 50px;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 250px);
-        grid-template-rows: auto;
-        grid-auto-flow: dense;
-        grid-auto-rows: auto;
-        align-items: start;
-        row-gap: 10px;
-        column-gap: 10px;
         padding: 10px 10px;
-        justify-content: center;
+        position: relative;
+
     }
 }

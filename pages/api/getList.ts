@@ -6,7 +6,7 @@ export default function handler(
     res: NextApiResponse
 ) {
     const mockData = Mock.mock({
-        'data|1-20': [{
+        'data|20': [{
             'id|+1': 1,
             'text|1-100': '321',
             'height|100-500': 100

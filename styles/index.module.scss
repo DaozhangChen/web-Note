@@ -32,7 +32,8 @@
 
     & .noteWrapper {
         height: calc(100vh - 50px);
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
         margin-top: 50px;
         padding: 10px 10px;
         position: relative;

@@ -54,9 +54,6 @@ export default function Home() {
     const heightArray: number[] = []
     setBetterList(returnNewArray(list, leftArray, heightArray))
   }, [gapWidth, list, noteListData.leftArray])
-  useEffect(() => {
-    // console.log(betterList)
-  }, [betterList])
 
   return (
     <>

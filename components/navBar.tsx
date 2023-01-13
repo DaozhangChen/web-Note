@@ -1,4 +1,4 @@
-import { SetStateAction, useRef, useState } from 'react'
+import { SetStateAction, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import s from '../styles/components/navBar.module.scss'
 import Note from './note'
@@ -6,7 +6,12 @@ import { createRoot, Root } from 'react-dom/client'
 
 export default function NavBar() {
     const reactRoot = useRef<Root>()
+    const refNote = useRef<HTMLDivElement>(null)
     const maskClick = () => {
+        const data = refNote.current?.innerText
+        if (data !== '') {
+            fetch('/api/addNote', { method: 'post', body: JSON.stringify(data) })
+        }
         reactRoot?.current?.unmount()
     }
     const clickButton = () => {
@@ -15,7 +20,7 @@ export default function NavBar() {
     const addNote = () => {
         const container = <>
             <div className={s.mask} onClick={maskClick} />
-            <div className={s.noteWrapper}>
+            <div className={s.noteWrapper} ref={refNote}>
                 <Note key={999} id={999}
                     changeText={setList} top={0} left={0}
                     text={'654654654'} height={120} onClick={clickButton} />

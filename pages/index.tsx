@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useEffect, useMemo, useState } from 'react'
 import NavBar from '../components/navBar'
 import Note from '../components/note'
+import { returnLeftListArray } from '../helper/returnLeftArray'
 import s from '../styles/index.module.scss'
 
 interface noteListData {
@@ -51,15 +52,7 @@ export default function Home() {
   useEffect(() => {
     if (noteListData.width) {
       setNoteListData(list => {
-        const count = Math.floor((list.width - 20) / 250)
-        const width = (list.width - count * 250) / (count + 2)
-        let leftArray = []
-        let currentLeft = width
-        for (let i = 0; i < count; i++) {
-          leftArray.push(currentLeft)
-          currentLeft += width + 250
-        }
-        return { ...list, leftArray: leftArray }
+        return returnLeftListArray(list)
       })
     }
   }, [noteListData.width])

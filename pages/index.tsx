@@ -31,6 +31,11 @@ export default function Home() {
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   useEffect(() => {
+    fetch('/api/getUser', { method: 'get' }).then((a) => {
+      return a.json()
+    }).then((b => {
+      console.log(b)
+    }))
     fetch('/api/getList', { method: 'get' }).then((promiseData) => {
       return promiseData.json()
     }, (res) => {

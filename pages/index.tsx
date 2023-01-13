@@ -12,21 +12,31 @@ interface noteListData {
   leftArray: number[]
 }
 
+interface betterList {
+  id: number,
+  top: number
+  left: number
+  text: string
+  height: number
+}
+type baseList = Omit<betterList, 'top' | 'left'>
+
 export default function Home() {
   const baseList = [
-    { id: 1, top: 0, left: 20, text: '31231321', height: 100 },
-    { id: 2, top: 0, left: 270, text: '64', height: 150 },
-    { id: 3, top: 0, left: 530, text: '64654654', height: 200 },
-    { id: 4, top: 0, left: 800, text: '13213', height: 300 },
-    { id: 5, top: 300, left: 20, text: '654654', height: 150 },
-    { id: 6, top: 300, left: 270, text: '654654', height: 112 },
-    { id: 7, top: 300, left: 530, text: '1321321', height: 130 },
-    { id: 8, top: 300, left: 800, text: '645654', height: 140 },
-    { id: 9, top: 600, left: 20, text: '65465487', height: 200 },
-    { id: 10, top: 600, left: 270, text: '4654654', height: 180 },
-    { id: 11, top: 600, left: 800, text: '3232465464', height: 130 }
+    { id: 1, text: '31231321', height: 100 },
+    { id: 2, text: '64', height: 150 },
+    { id: 3, text: '64654654', height: 200 },
+    { id: 4, text: '13213', height: 300 },
+    { id: 5, text: '654654', height: 150 },
+    { id: 6, text: '654654', height: 112 },
+    { id: 7, text: '1321321', height: 130 },
+    { id: 8, text: '645654', height: 140 },
+    { id: 9, text: '65465487', height: 200 },
+    { id: 10, text: '4654654', height: 180 },
+    { id: 11, text: '3232465464', height: 130 }
   ]
-  const [list, setList] = useState(baseList)
+  const [list, setList] = useState<baseList[]>(baseList)
+  const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 1000, listCount: 3, gapWidth: 10, leftArray: [0, 0, 0] })
   useEffect(() => {
     if (window.innerWidth) {
@@ -54,23 +64,30 @@ export default function Home() {
   useEffect(() => {
     const leftArray = noteListData.leftArray
     let count = 0
-    let heightArray: number[] = []
-    const a = list.map(noteList => {
+    const heightArray: number[] = []
+    const newArray: betterList[] = []
+    list.forEach(noteList => {
       if (count < leftArray.length) {
-        heightArray.push(baseList[count].top + noteList.height)
-        ++count
-        return { ...noteList, top: 10, left: leftArray[count - 1] }
+        heightArray.push(10 + noteList.height)
+        newArray.push(
+          { id: noteList.id, top: 10, left: leftArray[count], text: noteList.text, height: noteList.height }
+        )
       } else {
-        const i = count % heightArray.length
-        const height = heightArray[i]
+        const i = count % leftArray.length
+        const height = heightArray[i] + 10
         heightArray[i] += noteList.height + 10
-        ++count
-        return { ...noteList, top: height + 20, left: leftArray[i] }
+        newArray.push(
+          { id: noteList.id, top: height, left: leftArray[i], text: noteList.text, height: noteList.height }
+        )
       }
+      ++count
     })
-    setList(a)
+    setBetterList(newArray)
 
   }, [noteListData.gapWidth])
+  useEffect(() => {
+    console.log(betterList)
+  }, [betterList])
 
   return (
     <>
@@ -86,7 +103,14 @@ export default function Home() {
         </div>
         <NavBar />
         <div className={s.noteWrapper}>
-          {list.map(note => <Note key={note.id} id={note.id} changeText={setList} top={note.top} left={note.left} text={note.text} height={note.height} />)}
+          {betterList?.map(note => <Note
+            key={note.id}
+            id={note.id}
+            changeText={setList}
+            top={note.top}
+            left={note.left}
+            text={note.text}
+            height={note.height} />)}
         </div>
       </main>
     </>

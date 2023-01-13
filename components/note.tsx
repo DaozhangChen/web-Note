@@ -14,12 +14,10 @@ export default function Note(prop: Prop) {
     const [height, setHeight] = useState<number>()
 
     const changeText = (e: React.FormEvent<HTMLDivElement>): void => {
-        console.log(e.currentTarget.innerText)
+        // console.log(e.currentTarget.innerText)
     }
     const isNotFocus = () => {
         if (refDiv.current) {
-            console.log(refDiv.current)
-            console.log(prop.id)
             setHeight(refDiv.current.clientHeight)
         }
     }

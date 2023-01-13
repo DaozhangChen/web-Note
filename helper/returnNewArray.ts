@@ -1,4 +1,5 @@
-import { baseList, betterList } from "../next-env"
+import { baseList, betterList } from ".."
+
 
 export const returnNewArray = (list: baseList[], leftArray: number[], heightArray: number[]): betterList[] => {
     let count = 0

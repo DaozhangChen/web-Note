@@ -1,4 +1,4 @@
-import { noteListData } from "../next-env";
+import { noteListData } from ".."
 
 export const returnLeftArray = (list: noteListData) => {
     const count = Math.floor((list.width - 20) / 250)

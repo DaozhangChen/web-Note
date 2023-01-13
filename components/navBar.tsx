@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import s from '../styles/components/navBar.module.scss'
 import Note from './note'
 import { createRoot, Root } from 'react-dom/client'
+import { openLoginPage } from './loginPage'
 
 export default function NavBar() {
     const reactRoot = useRef<Root>()
@@ -38,7 +39,7 @@ export default function NavBar() {
             <button type="button" onClick={addNote}>添加标签</button>
             <div>
                 <span>用户名</span>
-                <button type='button'>登录</button>
+                <button type='button' onClick={openLoginPage}>登录</button>
             </div>
         </div>
     )

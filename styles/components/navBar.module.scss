@@ -29,3 +29,23 @@
         box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
     }
 }
+
+.mask {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.noteWrapper {
+    position: absolute;
+    width: 250px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

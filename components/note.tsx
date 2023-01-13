@@ -7,6 +7,7 @@ interface Prop {
     text: string,
     id: number,
     height: number,
+    onClick?: () => void,
     changeText: Dispatch<SetStateAction<{ id: number; text: string; height: number }[]>>
 }
 export default function Note(prop: Prop) {
@@ -32,7 +33,7 @@ export default function Note(prop: Prop) {
     return (
         <div className={s.wrapper} style={isOnChange ? { top: prop.top, left: prop.left, height } : { top: prop.top, left: prop.left, height: prop.height }} ref={refDiv}>
             <div className={s.navBar}>
-                <Image src="/close.svg" width={20} height={20} alt="close" priority property="true" />
+                <Image src="/close.svg" width={20} height={20} alt="close" priority property="true" onClick={prop.onClick} />
             </div>
             <div className={s.textarea} onInput={changeText} onFocus={onFocus} onBlur={isNotFocus} contentEditable dangerouslySetInnerHTML={{ __html: prop.text }} />
         </div>

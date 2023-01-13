@@ -9,13 +9,16 @@ export default function NavBar() {
     const maskClick = () => {
         reactRoot?.current?.unmount()
     }
+    const clickButton = () => {
+        reactRoot?.current?.unmount()
+    }
     const addNote = () => {
         const container = <>
             <div className={s.mask} onClick={maskClick} />
             <div className={s.noteWrapper}>
                 <Note key={999} id={999}
                     changeText={setList} top={0} left={0}
-                    text={'654654654'} height={120} />
+                    text={'654654654'} height={120} onClick={clickButton} />
             </div>
         </>
         const portalNote = ReactDOM.createPortal(container, document.body)

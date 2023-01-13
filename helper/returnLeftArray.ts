@@ -1,6 +1,6 @@
 import { noteListData } from "../next-env";
 
-export const returnLeftListArray = (list: noteListData) => {
+export const returnLeftArray = (list: noteListData) => {
     const count = Math.floor((list.width - 20) / 250)
     const width = (list.width - count * 250) / (count + 2)
     let leftArray = []

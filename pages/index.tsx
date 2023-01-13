@@ -3,22 +3,15 @@ import Image from 'next/image'
 import { useEffect, useMemo, useState } from 'react'
 import NavBar from '../components/navBar'
 import Note from '../components/note'
-import { returnLeftListArray } from '../helper/returnLeftArray'
+import { returnLeftArray } from '../helper/returnLeftArray'
+import { returnNewArray } from '../helper/returnNewArray'
+import { betterList, baseList } from '../next-env'
 import s from '../styles/index.module.scss'
 
 interface noteListData {
   width: number,
   leftArray: number[]
 }
-
-interface betterList {
-  id: number,
-  top: number
-  left: number
-  text: string
-  height: number
-}
-type baseList = Omit<betterList, 'top' | 'left'>
 
 export default function Home() {
   const baseList = [
@@ -52,32 +45,14 @@ export default function Home() {
   useEffect(() => {
     if (noteListData.width) {
       setNoteListData(list => {
-        return returnLeftListArray(list)
+        return returnLeftArray(list)
       })
     }
   }, [noteListData.width])
   useEffect(() => {
     const leftArray = noteListData.leftArray
-    let count = 0
     const heightArray: number[] = []
-    const newArray: betterList[] = []
-    list.forEach(noteList => {
-      if (count < leftArray.length) {
-        heightArray.push(10 + noteList.height)
-        newArray.push(
-          { id: noteList.id, top: 10, left: leftArray[count], text: noteList.text, height: noteList.height }
-        )
-      } else {
-        const i = count % leftArray.length
-        const height = heightArray[i] + 10
-        heightArray[i] += noteList.height + 10
-        newArray.push(
-          { id: noteList.id, top: height, left: leftArray[i], text: noteList.text, height: noteList.height }
-        )
-      }
-      ++count
-    })
-    setBetterList(newArray)
+    setBetterList(returnNewArray(list, leftArray, heightArray))
   }, [gapWidth, list, noteListData.leftArray])
   useEffect(() => {
     // console.log(betterList)

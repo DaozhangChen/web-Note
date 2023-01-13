@@ -4,22 +4,26 @@ import s from '../styles/components/LoginPage.module.scss'
 import Image from "next/image"
 
 type Prop = {
-    closeLoginPage: () => void
+    closeLoginPage: () => void,
+    maskClick: () => void
 }
 export default function LoginPage(prop: Prop) {
     return (
         createPortal(
             <>
-                <div className={s.mask} />
+                <div className={s.mask} onClick={prop.maskClick} />
                 <div className={s.mainWrapper}>
                     <div className={s.title}>
-                        <span>在此登录</span>
-                        <Image src="/close.svg" width={20} height={20} alt="close" priority property="true" onClick={prop.closeLoginPage} />
+                        <div>
+                            <span>在此登录</span>
+                            <span className={s.registerText}>点此注册</span>
+                        </div>
+                        <Image src="/close.svg" width={30} height={30} alt="close" priority property="true" onClick={prop.closeLoginPage} />
                     </div>
-                    <form>
-                        <input title="username" type="text" />
-                        <input title="userpassword" type="password" autoComplete="cc-number" />
-                        <button title="submit" type="submit">登录</button>
+                    <form className={s.formWrapper}>
+                        <input title="username" type="text" placeholder="用户名" />
+                        <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" />
+                        <button title="submit" type="submit">登  录</button>
                     </form>
                 </div>
             </>, document.body)
@@ -27,7 +31,7 @@ export default function LoginPage(prop: Prop) {
 }
 
 export const openLoginPage = () => {
-    const container = <LoginPage closeLoginPage={() => root.unmount()} />
+    const container = <LoginPage maskClick={() => root.unmount()} closeLoginPage={() => root.unmount()} />
     const div = document.createElement('div')
     const root = createRoot(div)
     root.render(container)

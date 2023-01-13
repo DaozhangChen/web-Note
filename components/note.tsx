@@ -10,23 +10,31 @@ interface Prop {
     changeText: Dispatch<SetStateAction<{ id: number; text: string; height: number }[]>>
 }
 export default function Note(prop: Prop) {
+    const [isOnChange, setIsOnChange] = useState<boolean>(false)
     const refDiv = useRef<HTMLDivElement>(null)
     const [height, setHeight] = useState<number>()
+    const onFocus = () => {
+        setIsOnChange(true)
+    }
 
     const changeText = (e: React.FormEvent<HTMLDivElement>): void => {
+        setIsOnChange(true)
         // console.log(e.currentTarget.innerText)
     }
     const isNotFocus = () => {
+
         if (refDiv.current) {
             setHeight(refDiv.current.clientHeight)
+            console.log(refDiv.current.clientHeight)
         }
+        setIsOnChange(false)
     }
     return (
-        <div className={s.wrapper} style={{ top: prop.top, left: prop.left, height: prop.height }} ref={refDiv}>
+        <div className={s.wrapper} style={isOnChange ? { top: prop.top, left: prop.left, height } : { top: prop.top, left: prop.left, height: prop.height }} ref={refDiv}>
             <div className={s.navBar}>
                 <Image src="/close.svg" width={20} height={20} alt="close" priority property="true" />
             </div>
-            <div className={s.textarea} onInput={changeText} onBlur={isNotFocus} contentEditable dangerouslySetInnerHTML={{ __html: prop.text }} />
+            <div className={s.textarea} onInput={changeText} onFocus={onFocus} onBlur={isNotFocus} contentEditable dangerouslySetInnerHTML={{ __html: prop.text }} />
         </div>
     )
 }

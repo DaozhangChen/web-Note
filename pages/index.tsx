@@ -13,22 +13,6 @@ interface noteListData {
   leftArray: number[]
 }
 
-// export async function getStaticProps() {
-//   const res = await fetch('http://localhost:3000/api/getList', { method: 'get' })
-//   const data = await res.json()
-//   console.log(data)
-
-//   if (!data) {
-//     return {
-//       notFound: true,
-//     }
-//   }
-
-//   return {
-//     props: { data },
-//   }
-// }
-
 export default function Home() {
   const baseList = [
     { id: 1, text: '31231321', height: 100 },
@@ -47,6 +31,13 @@ export default function Home() {
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   useEffect(() => {
+    fetch('/api/getList', { method: 'get' }).then((promiseData) => {
+      return promiseData.json()
+    }, (res) => {
+      console.log(res)
+    }).then((a) => {
+      setList(a.data)
+    })
     if (window.innerWidth) {
       setNoteListData(list => ({ ...list, width: window.innerWidth }))
       window.addEventListener('resize', () => {

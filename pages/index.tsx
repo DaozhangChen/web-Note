@@ -1,14 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import NavBar from '../components/navBar'
 import Note from '../components/note'
 import s from '../styles/index.module.scss'
 
 interface noteListData {
   width: number,
-  listCount: number,
-  gapWidth: number,
   leftArray: number[]
 }
 
@@ -37,7 +35,7 @@ export default function Home() {
   ]
   const [list, setList] = useState<baseList[]>(baseList)
   const [betterList, setBetterList] = useState<betterList[]>()
-  const [noteListData, setNoteListData] = useState<noteListData>({ width: 1000, listCount: 3, gapWidth: 10, leftArray: [0, 0, 0] })
+  const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   useEffect(() => {
     if (window.innerWidth) {
       setNoteListData(list => ({ ...list, width: window.innerWidth }))
@@ -46,6 +44,10 @@ export default function Home() {
       })
     }
   }, [])
+  const gapWidth = useMemo(() => {
+    const count = Math.floor((noteListData.width - 40) / 250)
+    return (noteListData.width - count * 250) / (count + 2)
+  }, [noteListData])
   useEffect(() => {
     if (noteListData.width) {
       setNoteListData(list => {
@@ -57,7 +59,7 @@ export default function Home() {
           leftArray.push(currentLeft)
           currentLeft += width + 250
         }
-        return { ...list, gapWidth: width, listCount: count, leftArray: leftArray }
+        return { ...list, leftArray: leftArray }
       })
     }
   }, [noteListData.width])
@@ -83,10 +85,9 @@ export default function Home() {
       ++count
     })
     setBetterList(newArray)
-
-  }, [noteListData.gapWidth])
+  }, [gapWidth, list, noteListData.leftArray])
   useEffect(() => {
-    console.log(betterList)
+    // console.log(betterList)
   }, [betterList])
 
   return (

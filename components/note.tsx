@@ -7,7 +7,7 @@ interface Prop {
     text: string,
     id: number,
     height: number,
-    changeText: Dispatch<SetStateAction<{ id: number; top: number; left: number; text: string; height: number }[]>>
+    changeText: Dispatch<SetStateAction<{ id: number; text: string; height: number }[]>>
 }
 export default function Note(prop: Prop) {
     const refDiv = useRef<HTMLDivElement>(null)

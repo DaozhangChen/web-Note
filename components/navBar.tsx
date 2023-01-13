@@ -48,7 +48,4 @@ export default function NavBar() {
 function setList(value: SetStateAction<{ id: number; text: string; height: number }[]>): void {
     throw new Error('Function not implemented.')
 }
-function hydrateRoot() {
-    throw new Error('Function not implemented.')
-}
 

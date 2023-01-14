@@ -26,10 +26,13 @@ export default function LoginPage(prop: Prop) {
     }
     const registerUser = (e: FormEvent) => {
         e.preventDefault()
-        return false
+        fetch('/api/register', { method: 'post', body: JSON.stringify(formData) })
+            .then((data) => { return data.json() })
+            .then((data) => console.log(data.name))
+        return true
     }
     useEffect(() => {
-        console.log(formData)
+        // console.log(formData)
     }, [formData])
     return (
         createPortal(
@@ -45,8 +48,8 @@ export default function LoginPage(prop: Prop) {
                             <Image src="/close.svg" width={30} height={30} alt="close" priority property="true" onClick={prop.closeLoginPage} />
                         </div>
                         <form className={s.formWrapper}>
-                            <input title="username" type="text" placeholder="用户名" />
-                            <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" />
+                            <input title="username" type="text" placeholder="用户名" onChange={changeData} />
+                            <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" onChange={changeData} />
                             <button title="submit" type="submit">登  录</button>
                         </form>
                     </div>

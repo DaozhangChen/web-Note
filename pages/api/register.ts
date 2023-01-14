@@ -31,7 +31,7 @@ export default function handler(
                         resolve('注册成功')
                     })
                 } else {
-                    res.status(409).json({ message: '用户名重复' })
+                    res.status(409).json({ error: '用户名重复' })
                     connection.end()
                     reject('用户名重复')
                 }

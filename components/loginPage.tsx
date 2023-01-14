@@ -32,10 +32,17 @@ export default function LoginPage(prop: Prop) {
             setErrorMessage(error)
             return undefined
         }
-        console.log('444')
         fetch('/api/register', { method: 'post', body: JSON.stringify(formData) })
             .then((data) => { return data.json() })
-            .then((data) => console.log(data.name))
+            .then((data) => {
+                if (data.error) {
+                    setErrorMessage(i => ({ ...i, nameError: data.error }))
+                } else {
+                    window.alert('注册成功，自动为您跳转至登录页面')
+                    setIsLogin(true)
+                    console.log(data.data.userId)
+                }
+            })
         return true
     }
     const loginUser = (e: FormEvent) => {

@@ -1,3 +1,4 @@
+
 export interface betterList extends baseList {
     top: number
     left: number
@@ -20,3 +21,4 @@ export interface errorMessage {
     nameError?: string,
     pwdError?: string
 }
+

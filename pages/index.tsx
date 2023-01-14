@@ -8,30 +8,32 @@ import { returnNewArray } from '../helper/returnNewArray'
 import { betterList, baseList } from '..'
 import s from '../styles/index.module.scss'
 import { useRouter } from 'next/router'
+import { NextPage } from 'next'
 
 interface noteListData {
   width: number,
   leftArray: number[]
 }
 
-export default function Home() {
+const Home: NextPage = () => {
   const router = useRouter()
   const [list, setList] = useState<baseList[]>([])
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   useEffect(() => {
-    fetch('/api/getUser', { method: 'get' }).then((a) => {
-      return a.json()
-    }).then((b => {
-      // console.log(b)
-    }))
-    fetch('/api/getList', { method: 'get' }).then((promiseData) => {
-      return promiseData.json()
-    }, (res) => {
-      console.log(res)
-    }).then((a) => {
-      setList(a.data)
-    })
+    const jwt = localStorage.getItem('jwt')
+    if (jwt) {
+      fetch('/api/getList', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
+        .then((req) => { console.log(req) })
+        .then(data => { console.log(data) })
+    }
+    // fetch('/api/getList', { method: 'get' }).then((promiseData) => {
+    //   return promiseData.json()
+    // }, (res) => {
+    //   console.log(res)
+    // }).then((a) => {
+    //   setList(a.data)
+    // })
     if (window.innerWidth) {
       setNoteListData(list => ({ ...list, width: window.innerWidth }))
       window.addEventListener('resize', () => {
@@ -83,3 +85,9 @@ export default function Home() {
     </>
   )
 }
+
+// Home.getInitialProps = async (ctx) => {
+
+// }
+
+export default Home

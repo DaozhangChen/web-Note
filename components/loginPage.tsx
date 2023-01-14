@@ -5,7 +5,6 @@ import Image from "next/image"
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { errorMessage, formData } from ".."
 import { validateData } from "../helper/validateData"
-import { useRouter } from "next/navigation"
 
 type Prop = {
     closeLoginPage: () => void,
@@ -50,7 +49,7 @@ export default function LoginPage(prop: Prop) {
         const error = validateData(formData)
         if (error.nameError || error.pwdError) {
             setErrorMessage(error)
-            return undefined
+            return false
         }
         fetch('/api/login', { method: 'post', body: JSON.stringify(formData) })
             .then((data) => { return data.json() })
@@ -58,9 +57,9 @@ export default function LoginPage(prop: Prop) {
                 if (data.error) {
                     setErrorMessage(i => ({ ...i, nameError: data.error }))
                 } else {
-                    console.log(data)
                     localStorage.setItem('jwt', data)
                     window.alert('登录成功')
+                    location.reload()
                 }
             })
         return true

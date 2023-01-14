@@ -7,22 +7,35 @@ type Data = {
 
 export default function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Data>
+    res: NextApiResponse
 ) {
-    if (req.method === 'POST') {
-        const username = JSON.parse(req.body).username
-        const password = JSON.parse(req.body).password
-        const connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: 'Bb15880493793.',
-            database: 'list'
-        })
-        connection.connect()
-        connection.query('insert into user value (?,?,?)', [0, username, password], (err, results, fileds) => {
-            if (err) throw err
-        })
-        connection.end()
-        res.status(200).json({ name: '注册成功' })
-    }
+    return new Promise((resolve, reject) => {
+        if (req.method === 'POST') {
+            const username = JSON.parse(req.body).username
+            const password = JSON.parse(req.body).password
+            const connection = mysql.createPool({
+                host: 'localhost',
+                user: 'root',
+                password: 'Bb15880493793.',
+                database: 'list',
+                connectionLimit: 10
+
+            })
+            connection.query('select * from user where userName=?', [username], (err, results, fileds) => {
+                if (err) throw err
+                if (results.length === 0) {
+                    connection.query('insert into user value (?,?,?)', [0, username, password], (err, data, fileds) => {
+                        if (err) throw err
+                        res.status(200).json({ data: { userId: data.insertId }, message: '注册成功' })
+                        connection.end()
+                        resolve('注册成功')
+                    })
+                } else {
+                    res.status(409).json({ message: '用户名重复' })
+                    connection.end()
+                    reject('用户名重复')
+                }
+            })
+        }
+    })
 }

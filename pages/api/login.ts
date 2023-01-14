@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import mysql from 'mysql'
-
+import jwt from 'jsonwebtoken'
 
 
 export default function handler(
@@ -20,12 +20,24 @@ export default function handler(
             })
             connection.query('select * from user where userName=? and userPassword=?', [username, password], (err, results, fileds) => {
                 if (err) throw err
-                res.status(200).json(results)
-                resolve(results)
-                connection.end()
+                if (results.length === 0) {
+                    res.status(401).json({ error: '用户名或密码错误' })
+                    connection.end()
+                } else {
+                    const value = results[0]
+                    const token = jwt.sign(
+                        {
+                            userId: value.userId,
+                            userName: value.userName,
+                            exp: Math.floor(Date.now() / 100) + (60 * 60 * 24)
+                        }, 'xxx')
+                    res.status(200).json(token)
+                    connection.end()
+                    resolve(token)
+                }
             })
         } else {
-            res.status(400).json({ message: 'error' })
+            res.status(400).json({ error: '请求方法错误' })
             reject('method error')
         }
     })

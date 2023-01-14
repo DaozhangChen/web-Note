@@ -5,6 +5,7 @@ import Image from "next/image"
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { errorMessage, formData } from ".."
 import { validateData } from "../helper/validateData"
+import { useRouter } from "next/navigation"
 
 type Prop = {
     closeLoginPage: () => void,
@@ -40,24 +41,31 @@ export default function LoginPage(prop: Prop) {
                 } else {
                     window.alert('注册成功，自动为您跳转至登录页面')
                     setIsLogin(true)
-                    console.log(data.data.userId)
                 }
             })
         return true
     }
     const loginUser = (e: FormEvent) => {
         e.preventDefault()
-        fetch('/api/login', { method: 'delete', body: JSON.stringify(formData) })
-            .then((data) => { return data.json() }, (reason) => {
-                throw reason
-            })
-            .then((data) => console.log('resolve' + data), (error) => {
-                console.log('error' + error)
+        const error = validateData(formData)
+        if (error.nameError || error.pwdError) {
+            setErrorMessage(error)
+            return undefined
+        }
+        fetch('/api/login', { method: 'post', body: JSON.stringify(formData) })
+            .then((data) => { return data.json() })
+            .then((data) => {
+                if (data.error) {
+                    setErrorMessage(i => ({ ...i, nameError: data.error }))
+                } else {
+                    console.log(data)
+                    localStorage.setItem('jwt', data)
+                    window.alert('登录成功')
+                }
             })
         return true
     }
     useEffect(() => {
-        // console.log(formData)
         console.log(errorMessage)
     }, [errorMessage])
     return (

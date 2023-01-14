@@ -7,6 +7,7 @@ import { returnLeftArray } from '../helper/returnLeftArray'
 import { returnNewArray } from '../helper/returnNewArray'
 import { betterList, baseList } from '..'
 import s from '../styles/index.module.scss'
+import { useRouter } from 'next/router'
 
 interface noteListData {
   width: number,
@@ -14,6 +15,7 @@ interface noteListData {
 }
 
 export default function Home() {
+  const router = useRouter()
   const [list, setList] = useState<baseList[]>([])
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
@@ -21,7 +23,7 @@ export default function Home() {
     fetch('/api/getUser', { method: 'get' }).then((a) => {
       return a.json()
     }).then((b => {
-      console.log(b)
+      // console.log(b)
     }))
     fetch('/api/getList', { method: 'get' }).then((promiseData) => {
       return promiseData.json()

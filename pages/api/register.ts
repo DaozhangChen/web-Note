@@ -26,7 +26,7 @@ export default function handler(
                 if (results.length === 0) {
                     connection.query('insert into user value (?,?,?)', [0, username, password], (err, data, fileds) => {
                         if (err) throw err
-                        res.status(200).json({ data: { userId: data.insertId }, message: '注册成功' })
+                        res.status(200).json({ message: '注册成功' })
                         connection.end()
                         resolve('注册成功')
                     })

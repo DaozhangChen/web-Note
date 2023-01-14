@@ -2,17 +2,35 @@ import { createPortal } from "react-dom"
 import { createRoot } from "react-dom/client"
 import s from '../styles/components/LoginPage.module.scss'
 import Image from "next/image"
-import { useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
 type Prop = {
     closeLoginPage: () => void,
     maskClick: () => void
 }
+interface formData {
+    username: string
+    password: string
+}
 export default function LoginPage(prop: Prop) {
     const [isLogin, setIsLogin] = useState<boolean>(true)
+    const [formData, setFormData] = useState<formData>({ username: '', password: '' })
     const changeState = () => {
         setIsLogin(!isLogin)
     }
+    const changeData = (e: ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.title
+        name === 'username'
+            ? setFormData(i => ({ ...i, username: e.target.value }))
+            : setFormData(i => ({ ...i, password: e.target.value }))
+    }
+    const registerUser = (e: FormEvent) => {
+        e.preventDefault()
+        return false
+    }
+    useEffect(() => {
+        console.log(formData)
+    }, [formData])
     return (
         createPortal(
             <>{
@@ -42,9 +60,9 @@ export default function LoginPage(prop: Prop) {
                                 </div>
                                 <Image src="/close.svg" width={30} height={30} alt="close" priority property="true" onClick={prop.closeLoginPage} />
                             </div>
-                            <form className={s.formWrapper}>
-                                <input title="username" type="text" placeholder="用户名" />
-                                <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" />
+                            <form className={s.formWrapper} onSubmit={registerUser}>
+                                <input title="username" type="text" placeholder="用户名" onChange={changeData} />
+                                <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" onChange={changeData} />
                                 <button title="submit" type="submit">注  册</button>
                             </form>
                         </div></>

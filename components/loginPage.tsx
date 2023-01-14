@@ -31,6 +31,17 @@ export default function LoginPage(prop: Prop) {
             .then((data) => console.log(data.name))
         return true
     }
+    const loginUser = (e: FormEvent) => {
+        e.preventDefault()
+        fetch('/api/login', { method: 'delete', body: JSON.stringify(formData) })
+            .then((data) => { return data.json() }, (reason) => {
+                throw reason
+            })
+            .then((data) => console.log('resolve' + data), (error) => {
+                console.log('error' + error)
+            })
+        return true
+    }
     useEffect(() => {
         // console.log(formData)
     }, [formData])
@@ -47,7 +58,7 @@ export default function LoginPage(prop: Prop) {
                             </div>
                             <Image src="/close.svg" width={30} height={30} alt="close" priority property="true" onClick={prop.closeLoginPage} />
                         </div>
-                        <form className={s.formWrapper}>
+                        <form className={s.formWrapper} onSubmit={loginUser}>
                             <input title="username" type="text" placeholder="用户名" onChange={changeData} />
                             <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" onChange={changeData} />
                             <button title="submit" type="submit">登  录</button>

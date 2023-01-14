@@ -54,6 +54,18 @@
         height: calc(100% - 50px);
         padding: 30px 0;
 
+        & .inputWrapper {
+
+            & span {
+                position: absolute;
+                height: 30px;
+                margin-left: 10px;
+                font-size: 12px;
+                color: red;
+                line-height: 30px;
+            }
+        }
+
         & input {
             width: 200px;
             height: 30px;
@@ -70,6 +82,7 @@
             color: white;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
         }
     }
 }

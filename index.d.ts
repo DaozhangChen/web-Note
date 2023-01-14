@@ -11,3 +11,12 @@ export interface noteListData {
     width: number
     leftArray: number[]
 }
+export interface formData {
+    username: string
+    password: string
+}
+export interface errorMessage {
+
+    nameError?: string,
+    pwdError?: string
+}

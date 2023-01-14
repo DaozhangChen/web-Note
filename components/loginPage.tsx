@@ -3,18 +3,18 @@ import { createRoot } from "react-dom/client"
 import s from '../styles/components/LoginPage.module.scss'
 import Image from "next/image"
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
+import { errorMessage, formData } from ".."
+import { validateData } from "../helper/validateData"
 
 type Prop = {
     closeLoginPage: () => void,
     maskClick: () => void
 }
-interface formData {
-    username: string
-    password: string
-}
+
 export default function LoginPage(prop: Prop) {
     const [isLogin, setIsLogin] = useState<boolean>(true)
     const [formData, setFormData] = useState<formData>({ username: '', password: '' })
+    const [errorMessage, setErrorMessage] = useState<errorMessage>()
     const changeState = () => {
         setIsLogin(!isLogin)
     }
@@ -26,6 +26,13 @@ export default function LoginPage(prop: Prop) {
     }
     const registerUser = (e: FormEvent) => {
         e.preventDefault()
+        setErrorMessage({})
+        const error = validateData(formData)
+        if (error.nameError || error.pwdError) {
+            setErrorMessage(error)
+            return undefined
+        }
+        console.log('444')
         fetch('/api/register', { method: 'post', body: JSON.stringify(formData) })
             .then((data) => { return data.json() })
             .then((data) => console.log(data.name))
@@ -44,7 +51,8 @@ export default function LoginPage(prop: Prop) {
     }
     useEffect(() => {
         // console.log(formData)
-    }, [formData])
+        console.log(errorMessage)
+    }, [errorMessage])
     return (
         createPortal(
             <>{
@@ -59,8 +67,14 @@ export default function LoginPage(prop: Prop) {
                             <Image src="/close.svg" width={30} height={30} alt="close" priority property="true" onClick={prop.closeLoginPage} />
                         </div>
                         <form className={s.formWrapper} onSubmit={loginUser}>
-                            <input title="username" type="text" placeholder="用户名" onChange={changeData} />
-                            <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" onChange={changeData} />
+                            <div className={s.inputWrapper}>
+                                <input title="username" type="text" placeholder="用户名" onChange={changeData} />
+                                <span>{errorMessage?.nameError}</span>
+                            </div>
+                            <div className={s.inputWrapper}>
+                                <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" onChange={changeData} />
+                                <span>{errorMessage?.pwdError}</span>
+                            </div>
                             <button title="submit" type="submit">登  录</button>
                         </form>
                     </div>
@@ -75,8 +89,14 @@ export default function LoginPage(prop: Prop) {
                                 <Image src="/close.svg" width={30} height={30} alt="close" priority property="true" onClick={prop.closeLoginPage} />
                             </div>
                             <form className={s.formWrapper} onSubmit={registerUser}>
-                                <input title="username" type="text" placeholder="用户名" onChange={changeData} />
-                                <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" onChange={changeData} />
+                                <div className={s.inputWrapper}>
+                                    <input title="username" type="text" placeholder="用户名" onChange={changeData} />
+                                    <span>{errorMessage?.nameError}</span>
+                                </div>
+                                <div className={s.inputWrapper}>
+                                    <input title="userpassword" type="password" placeholder="密码" autoComplete="cc-number" onChange={changeData} />
+                                    <span>{errorMessage?.pwdError}</span>
+                                </div>
                                 <button title="submit" type="submit">注  册</button>
                             </form>
                         </div></>

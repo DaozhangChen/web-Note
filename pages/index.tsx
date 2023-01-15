@@ -1,13 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { useEffect, useMemo, useState } from 'react'
+import { MouseEventHandler, useEffect, useMemo, useState } from 'react'
 import NavBar from '../components/navBar'
 import Note from '../components/note'
 import { returnLeftArray } from '../helper/returnLeftArray'
 import { returnNewArray } from '../helper/returnNewArray'
-import { betterList, baseList } from '..'
+import { betterList } from '..'
 import s from '../styles/index.module.scss'
-import { useRouter } from 'next/router'
 import { NextPage } from 'next'
 import { useMeStore } from '../stores/useMeStore'
 import { useNoteStore } from '../stores/useNoteStore'
@@ -30,6 +29,10 @@ const Home: NextPage = () => {
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   const meStoreFetch = useMeStore(state => state.fetchMe)
+  const deleteData: MouseEventHandler = (e) => {
+    const id = (e.target as Element).id
+    console.log(id)
+  }
   useEffect(() => {
     const jwt = localStorage.getItem('jwt')
     if (jwt) {
@@ -94,7 +97,8 @@ const Home: NextPage = () => {
             top={note.top}
             left={note.left}
             text={note.text}
-            height={note.height} />)}
+            height={note.height}
+            onClick={deleteData} />)}
         </div>
       </main>
     </>

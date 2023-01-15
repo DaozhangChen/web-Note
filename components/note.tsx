@@ -1,14 +1,16 @@
 import Image from 'next/image'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { addNoteData } from '..';
 import s from '../styles/components/note.module.scss'
 interface Prop {
-    top: number,
-    left: number,
-    text: string,
-    id: number,
-    height: number,
+    top?: number,
+    left?: number,
+    text?: string,
+    id?: number,
+    height?: number,
     onClick?: () => void,
-    changeText: Dispatch<SetStateAction<{ id: number; text: string; height: number }[]>>
+    changeText?: Dispatch<SetStateAction<{ id: number; text: string; height: number }[]>>
+    addNote?: Dispatch<SetStateAction<addNoteData>>
 }
 export default function Note(prop: Prop) {
     const [isOnChange, setIsOnChange] = useState<boolean>(false)
@@ -20,13 +22,19 @@ export default function Note(prop: Prop) {
 
     const changeText = (e: React.FormEvent<HTMLDivElement>): void => {
         setIsOnChange(true)
+        if (prop.addNote) {
+            if (e.currentTarget.innerText) {
+                const innerText = e.currentTarget.innerText
+                prop.addNote(data => ({ ...data, text: innerText }))
+            }
+        }
         // console.log(e.currentTarget.innerText)
+
     }
     const isNotFocus = () => {
-
         if (refDiv.current) {
             setHeight(refDiv.current.clientHeight)
-            console.log(refDiv.current.clientHeight)
+            prop.addNote?.(data => ({ ...data, height: refDiv.current!.clientHeight }))
         }
         setIsOnChange(false)
     }
@@ -35,7 +43,7 @@ export default function Note(prop: Prop) {
             <div className={s.navBar}>
                 <Image src="/close.svg" width={20} height={20} alt="close" priority property="true" onClick={prop.onClick} />
             </div>
-            <div className={s.textarea} onInput={changeText} onFocus={onFocus} onBlur={isNotFocus} contentEditable dangerouslySetInnerHTML={{ __html: prop.text }} />
+            <div className={s.textarea} onInput={changeText} onFocus={onFocus} onBlur={isNotFocus} contentEditable dangerouslySetInnerHTML={{ __html: prop.text || '' }} />
         </div>
     )
 }

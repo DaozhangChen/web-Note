@@ -1,3 +1,4 @@
+import { type } from "os"
 
 export interface betterList extends baseList {
     top: number
@@ -21,4 +22,5 @@ export interface errorMessage {
     nameError?: string,
     pwdError?: string
 }
+export type addNoteData = Omit<baseList, 'id'>
 

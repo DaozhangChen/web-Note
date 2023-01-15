@@ -26,12 +26,13 @@ const Home: NextPage = () => {
   const noteList = useNoteStore().noteList
   const setNoteList = useNoteStore().setNoteList
   const resetNoteList = useNoteStore().reset
+  const deleteNote = useNoteStore().delectNote
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   const meStoreFetch = useMeStore(state => state.fetchMe)
   const deleteData: MouseEventHandler = (e) => {
     const id = (e.target as Element).id
-    console.log(id)
+    deleteNote(+id)
   }
   useEffect(() => {
     const jwt = localStorage.getItem('jwt')
@@ -105,8 +106,5 @@ const Home: NextPage = () => {
   )
 }
 
-// Home.getInitialProps = async (ctx) => {
-
-// }
 
 export default Home

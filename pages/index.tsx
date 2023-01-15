@@ -9,6 +9,7 @@ import { betterList, baseList } from '..'
 import s from '../styles/index.module.scss'
 import { useRouter } from 'next/router'
 import { NextPage } from 'next'
+import { useMeStore } from '../stores/useMeStore'
 
 interface noteListData {
   width: number,
@@ -20,12 +21,15 @@ const Home: NextPage = () => {
   const [list, setList] = useState<baseList[]>([])
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
+  const meStoreFetch = useMeStore(state => state.fetchMe)
   useEffect(() => {
+
     const jwt = localStorage.getItem('jwt')
     if (jwt) {
-      fetch('/api/getList', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
-        .then((req) => { console.log(req) })
-        .then(data => { console.log(data) })
+      meStoreFetch(jwt)
+      // fetch('/api/getList', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
+      //   .then((req) => { console.log(req) })
+      //   .then(data => { console.log(data) })
     }
     // fetch('/api/getList', { method: 'get' }).then((promiseData) => {
     //   return promiseData.json()

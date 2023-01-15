@@ -29,7 +29,7 @@ export default function handler(
                         {
                             userId: value.userId,
                             userName: value.userName,
-                            exp: Math.floor(Date.now() / 100) + (60 * 60 * 24)
+                            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
                         }, 'xxx')
                     res.status(200).json(token)
                     connection.end()

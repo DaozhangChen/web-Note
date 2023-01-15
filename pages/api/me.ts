@@ -30,6 +30,9 @@ export default function handler(
                                         resolve(value)
                                     }
                                 })
+                            } else {
+                                res.status(401).json({ error: '身份验证不通过' })
+                                reject({ error: '身份验证不通过' })
                             }
                         } else {
                             res.status(401).json({ error: '身份验证不通过' })

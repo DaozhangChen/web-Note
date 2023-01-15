@@ -10,15 +10,23 @@ import s from '../styles/index.module.scss'
 import { useRouter } from 'next/router'
 import { NextPage } from 'next'
 import { useMeStore } from '../stores/useMeStore'
+import { useNoteStore } from '../stores/useNoteStore'
 
 interface noteListData {
   width: number,
   leftArray: number[]
 }
+type fetchData = {
+  noteId: number,
+  userId: number,
+  text: string,
+  height: number
+}
 
 const Home: NextPage = () => {
-  const router = useRouter()
-  const [list, setList] = useState<baseList[]>([])
+  const noteList = useNoteStore().noteList
+  const setNoteList = useNoteStore().setNoteList
+  const resetNoteList = useNoteStore().reset
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   const meStoreFetch = useMeStore(state => state.fetchMe)
@@ -26,17 +34,16 @@ const Home: NextPage = () => {
     const jwt = localStorage.getItem('jwt')
     if (jwt) {
       meStoreFetch(jwt)
-      // fetch('/api/getList', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
-      //   .then((req) => { console.log(req) })
-      //   .then(data => { console.log(data) })
+      fetch('/api/getList', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
+        .then((response) => { return response.json() })
+        .then(jsonData => {
+          const dataList: fetchData[] = jsonData.data
+          resetNoteList()
+          dataList.forEach((data) => {
+            setNoteList(data)
+          })
+        })
     }
-    // fetch('/api/getList', { method: 'get' }).then((promiseData) => {
-    //   return promiseData.json()
-    // }, (res) => {
-    //   console.log(res)
-    // }).then((a) => {
-    //   setList(a.data)
-    // })
     if (window.innerWidth) {
       setNoteListData(list => ({ ...list, width: window.innerWidth }))
       window.addEventListener('resize', () => {
@@ -63,8 +70,8 @@ const Home: NextPage = () => {
   useEffect(() => {
     const leftArray = noteListData.leftArray
     const heightArray: number[] = []
-    setBetterList(returnNewArray(list, leftArray, heightArray))
-  }, [gapWidth, list, noteListData.leftArray])
+    setBetterList(returnNewArray(noteList, leftArray, heightArray))
+  }, [gapWidth, noteList, noteListData.leftArray])
 
   return (
     <>
@@ -83,7 +90,7 @@ const Home: NextPage = () => {
           {betterList?.map(note => <Note
             key={note.id}
             id={note.id}
-            changeText={setList}
+            // changeText={}
             top={note.top}
             left={note.left}
             text={note.text}

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import mysql from 'mysql'
+import { connectDB } from '../../helper/connectDB'
 
 type Data = {
     name: string
@@ -13,14 +13,7 @@ export default function handler(
         if (req.method === 'POST') {
             const username = JSON.parse(req.body).username
             const password = JSON.parse(req.body).password
-            const connection = mysql.createPool({
-                host: 'localhost',
-                user: 'root',
-                password: 'Bb15880493793.',
-                database: 'list',
-                connectionLimit: 10
-
-            })
+            const connection = connectDB()
             connection.query('select * from user where userName=?', [username], (err, results, fileds) => {
                 if (err) throw err
                 if (results.length === 0) {

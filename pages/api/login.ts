@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import mysql from 'mysql'
 import jwt from 'jsonwebtoken'
+import { connectDB } from '../../helper/connectDB'
 
 
 export default function handler(
@@ -11,13 +12,7 @@ export default function handler(
         if (req.method === 'POST') {
             const username = JSON.parse(req.body).username
             const password = JSON.parse(req.body).password
-            const connection = mysql.createPool({
-                host: 'localhost',
-                user: 'root',
-                password: 'Bb15880493793.',
-                database: 'list',
-                connectionLimit: 10
-            })
+            const connection = connectDB()
             connection.query('select * from user where userName=? and userPassword=?', [username, password], (err, results, fileds) => {
                 if (err) throw err
                 if (results.length === 0) {

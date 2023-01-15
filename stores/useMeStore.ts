@@ -23,7 +23,6 @@ export const useMeStore = create((set, get: () => storeData) => ({
     fetchMe: async (jwt) => {
         const response = await fetch('/api/me', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
         const status = response.status
-        console.log(status)
         if (status >= 200 && status < 300) {
             const data: Data = await response.json()
             if (data.userId && data.userName) {

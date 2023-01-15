@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import mysql from 'mysql'
 import jwt from 'jsonwebtoken'
-import { decode } from "punycode";
+import { connectDB } from "../../helper/connectDB";
 
 export default function handler(
     req: NextApiRequest,
@@ -18,13 +17,7 @@ export default function handler(
                             if (decoded.iat < Math.floor(Date.now() / 1000)) {
                                 const userId = decoded.userId
                                 const userName = decoded.userName
-                                const connection = mysql.createPool({
-                                    host: 'localhost',
-                                    user: 'root',
-                                    password: 'Bb15880493793.',
-                                    database: 'list',
-                                    connectionLimit: 10
-                                })
+                                const connection = connectDB()
                                 connection.query('select * from user where userName=? and userId=?', [userName, userId], (err, results, fileds) => {
                                     if (err) throw err
                                     if (results.length === 0) {

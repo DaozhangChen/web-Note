@@ -6,7 +6,9 @@ type storeData = {
     fetchMe: (jwt: string) => void,
     patchUserId: (newId: number) => void,
     patchUserName: (newUserName: string) => void,
-    reset: () => void
+    patchJwt: (newJwt: string) => void,
+    reset: () => void,
+    jwt: string
 }
 type Data = {
     userId?: number,
@@ -17,10 +19,13 @@ type Data = {
 export const useMeStore = create((set, get: () => storeData) => ({
     userId: 0,
     userName: '',
+    jwt: '',
     patchUserId: (newId: number) => set({ userId: newId }),
     patchUserName: (newUserName: string) => set({ userName: newUserName }),
+    patchJwt: (newJwt: string) => set({ jwt: newJwt }),
     reset: () => set({ userId: 0, userName: '' }),
     fetchMe: async (jwt) => {
+        get().patchJwt(jwt)
         const response = await fetch('/api/me', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
         const status = response.status
         if (status >= 200 && status < 300) {

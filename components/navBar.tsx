@@ -11,25 +11,32 @@ import { addNoteData } from '..'
 
 export default function NavBar() {
     const userName = useMeStore().userName
+    const jwt = useMeStore().jwt
     const reactRoot = useRef<Root>()
     const refNote = useRef<HTMLDivElement>(null)
     const [addNoteData, setAddNoteData] = useState<addNoteData>({ text: '', height: 100 })
+    const [isClick, setIsClick] = useState(false)
     const maskClick = () => {
-        const data = refNote.current?.innerText
-        if (data !== '') {
-            console.log('yes')
-            fetch('/api/addNote', { method: 'post', body: JSON.stringify(data) })
-        }
+        // const data = refNote.current?.innerText
+        setIsClick(true)
         reactRoot?.current?.unmount()
     }
     const clickButton = () => {
         reactRoot?.current?.unmount()
     }
     useEffect(() => {
-        console.log(addNoteData)
-    }, [addNoteData])
+        if (addNoteData.text !== '' && isClick) {
+            fetch('/api/addNote', {
+                method: 'post', body: JSON.stringify(addNoteData),
+                headers: { 'Authorization': `Bearer ${jwt}` }
+            })
+        }
+        setIsClick(false)
+    }, [addNoteData, isClick, jwt])
+
 
     const addNote = () => {
+        setAddNoteData({ text: '', height: 100 })
         const container = <>
             <div className={s.mask} onClick={maskClick} />
             <div className={s.noteWrapper} ref={refNote}>

@@ -4,8 +4,10 @@ import s from '../styles/components/navBar.module.scss'
 import Note from './note'
 import { createRoot, Root } from 'react-dom/client'
 import { openLoginPage } from './loginPage'
+import { useMeStore } from '../stores/useMeStore'
 
 export default function NavBar() {
+    const userName = useMeStore().userName
     const reactRoot = useRef<Root>()
     const refNote = useRef<HTMLDivElement>(null)
     const maskClick = () => {
@@ -38,7 +40,7 @@ export default function NavBar() {
         <div className={s.wrapper}>
             <button type="button" onClick={addNote}>添加标签</button>
             <div>
-                <span>用户名</span>
+                <span>{userName === '' ? '未登录' : userName}</span>
                 <button type='button' onClick={openLoginPage}>登录</button>
             </div>
         </div>

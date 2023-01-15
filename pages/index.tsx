@@ -23,7 +23,6 @@ const Home: NextPage = () => {
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   const meStoreFetch = useMeStore(state => state.fetchMe)
   useEffect(() => {
-
     const jwt = localStorage.getItem('jwt')
     if (jwt) {
       meStoreFetch(jwt)

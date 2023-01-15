@@ -22,7 +22,6 @@ export default function handler(
                 console.log(decoded.userId)
             }
         })
-
     }
 
     if (req.method === "GET") {

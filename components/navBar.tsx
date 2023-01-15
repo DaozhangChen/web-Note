@@ -17,7 +17,6 @@ export default function NavBar() {
     const [addNoteData, setAddNoteData] = useState<addNoteData>({ text: '', height: 100 })
     const [isClick, setIsClick] = useState(false)
     const maskClick = () => {
-        // const data = refNote.current?.innerText
         setIsClick(true)
         reactRoot?.current?.unmount()
     }

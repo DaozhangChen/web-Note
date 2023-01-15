@@ -27,9 +27,12 @@ export default function handler(
                                         reject({ error: '身份验证不通过' })
                                     } else {
                                         console.log(body)
-                                        res.status(200)
-                                        connection.end()
-                                        resolve('')
+                                        connection.query('insert into note value (?,?,?,?)', [0, userId, body.text, body.height], (err, data, fileds) => {
+                                            if (err) throw err
+                                            res.status(200).json({ message: '添加成功' })
+                                            connection.end()
+                                            resolve('添加成功')
+                                        })
                                     }
                                 })
                             }

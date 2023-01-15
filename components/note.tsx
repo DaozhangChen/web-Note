@@ -13,33 +13,28 @@ interface Prop {
     addNote?: Dispatch<SetStateAction<addNoteData>>
 }
 export default function Note(prop: Prop) {
-    const [isOnChange, setIsOnChange] = useState<boolean>(false)
     const refDiv = useRef<HTMLDivElement>(null)
     const [height, setHeight] = useState<number>()
     const onFocus = () => {
-        setIsOnChange(true)
     }
 
     const changeText = (e: React.FormEvent<HTMLDivElement>): void => {
-        setIsOnChange(true)
         if (prop.addNote) {
             if (e.currentTarget.innerText) {
                 const innerText = e.currentTarget.innerText
-                prop.addNote(data => ({ ...data, text: innerText }))
+                const replaceText = innerText.replaceAll(/\n/g, '<br/>')
+                prop.addNote(data => ({ ...data, text: replaceText }))
             }
         }
-        // console.log(e.currentTarget.innerText)
-
     }
     const isNotFocus = () => {
         if (refDiv.current) {
             setHeight(refDiv.current.clientHeight)
             prop.addNote?.(data => ({ ...data, height: refDiv.current!.clientHeight }))
         }
-        setIsOnChange(false)
     }
     return (
-        <div className={s.wrapper} style={isOnChange ? { top: prop.top, left: prop.left, height } : { top: prop.top, left: prop.left, height: prop.height }} ref={refDiv}>
+        <div className={s.wrapper} style={{ top: prop.top, left: prop.left }} ref={refDiv}>
             <div className={s.navBar}>
                 <Image src="/close.svg" width={20} height={20} alt="close" priority property="true" onClick={prop.onClick} />
             </div>

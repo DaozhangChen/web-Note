@@ -42,6 +42,11 @@ const Home: NextPage = () => {
       window.addEventListener('resize', () => {
         setNoteListData(list => ({ ...list, width: window.innerWidth }))
       })
+      window.addEventListener('storage', (e: StorageEvent) => {
+        if (e.key === 'jwt') {
+          meStoreFetch(e.newValue || '')
+        }
+      })
     }
   }, [])
   const gapWidth = useMemo(() => {

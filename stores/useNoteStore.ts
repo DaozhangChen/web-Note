@@ -6,6 +6,7 @@ type storeData = {
     setNoteList: (data: fetchData) => void,
     deleteNote: (id: number, jwt: string) => void,
     fetchList: (jwt: string) => void,
+    patchNote: (formData: Omit<fetchData, | 'userId'>, jwt: string) => void,
     reset: () => void
 }
 type fetchData = {
@@ -36,6 +37,9 @@ export const useNoteStore = create((set, get: () => storeData) => ({
                     get().setNoteList(data)
                 })
             })
+    },
+    patchNote: (formData: Omit<fetchData, | 'userId'>, jwt: string) => {
+        fetch('/api/patchNote', { method: 'PATCH', body: JSON.stringify(formData), headers: { 'Authorization': `Bearer ${jwt}` } })
     },
     reset: () => set({ noteList: [] })
 }))

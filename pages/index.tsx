@@ -88,7 +88,6 @@ const Home: NextPage = () => {
           {betterList?.map(note => <Note
             key={note.id}
             id={note.id}
-            // changeText={}
             top={note.top}
             left={note.left}
             text={note.text}

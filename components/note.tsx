@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Dispatch, FocusEventHandler, MouseEventHandler, SetStateAction, useEffect, useRef, useState } from 'react';
 import { addNoteData } from '..';
+import { useNoteStore } from '../stores/useNoteStore';
 import s from '../styles/components/note.module.scss'
 interface Prop {
     top?: number,
@@ -13,9 +14,13 @@ interface Prop {
     addNote?: Dispatch<SetStateAction<addNoteData>>
 }
 export default function Note(prop: Prop) {
+    const { patchNote: webPatchNote } = useNoteStore()
     const [patchNote, setPatchNote] = useState<{ noteId: number, text: string, height: number }>({ noteId: 0, text: '', height: 0 })
+    const [isOnChange, setIsOnChange] = useState(false)
     const onFocus: FocusEventHandler = (e) => {
+        setPatchNote({ noteId: 0, text: '', height: 0 })
         setPatchNote(data => ({ ...data, noteId: +e.target.id }))
+        setIsOnChange(true)
     }
 
     const changeText = (e: React.FormEvent<HTMLDivElement>): void => {
@@ -31,11 +36,16 @@ export default function Note(prop: Prop) {
     }
     const isNotFocus: FocusEventHandler = (e) => {
         console.dir(e.target.clientHeight)
-        setPatchNote(data => ({ ...data, height: e.target.clientHeight }))
+        setPatchNote(data => ({ ...data, height: e.target.clientHeight + 25 }))
+        setIsOnChange(false)
     }
     useEffect(() => {
+        const jwt = localStorage.getItem('jwt')
+        if (!isOnChange && patchNote.text !== '' && jwt) {
+            webPatchNote(patchNote, jwt)
+        }
         console.log(patchNote)
-    }, [patchNote])
+    }, [patchNote, isOnChange, webPatchNote])
     return (
         <div className={s.wrapper} style={{ top: prop.top, left: prop.left }}>
             <div className={s.navBar}>

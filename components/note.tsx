@@ -12,7 +12,6 @@ interface Prop {
     onClick?: MouseEventHandler<HTMLDivElement>,
     changeText?: Dispatch<SetStateAction<{ id: number; text: string; height: number }[]>>
     addNote?: Dispatch<SetStateAction<addNoteData>>
-    changeUi?: any
 }
 export default function Note(prop: Prop) {
     const { patchNote: webPatchNote, syncPatchNote } = useNoteStore()
@@ -29,7 +28,7 @@ export default function Note(prop: Prop) {
         const replaceText = innerText.replaceAll(/\n/g, '<br/>')
         if (prop.addNote) {
             if ((e.target as HTMLDivElement).innerText) {
-                prop.addNote({ height: (e.target as HTMLDivElement).clientHeight + 35, text: replaceText })
+                prop.addNote({ height: (e.target as HTMLDivElement).clientHeight + 25, text: replaceText })
             }
         } else {
             setPatchNote(data => ({ ...data, height: (e.target as HTMLDivElement).clientHeight + 25, text: replaceText }))

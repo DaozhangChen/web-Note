@@ -19,6 +19,10 @@ export default function NavBar() {
         setIsClick(true)
         reactRoot?.current?.unmount()
     }
+    const logout = () => {
+        localStorage.removeItem('jwt')
+        location.reload()
+    }
     const clickButton = () => {
         reactRoot?.current?.unmount()
     }
@@ -48,7 +52,12 @@ export default function NavBar() {
             <button type="button" onClick={addNote}>添加标签</button>
             <div>
                 <span>{userName === '' ? '未登录' : userName}</span>
-                <button type='button' onClick={openLoginPage}>登录</button>
+                {
+                    userName === ''
+                        ? <button type='button' onClick={openLoginPage}>登录</button>
+                        : <button type='button' onClick={logout}>注销</button>
+                }
+
             </div>
         </div>
     )

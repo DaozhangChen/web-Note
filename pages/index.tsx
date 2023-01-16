@@ -82,7 +82,6 @@ const Home: NextPage = () => {
         <NavBar />
         <div className={s.noteWrapper}>
           {betterList?.map(note => <Note
-            changeUi={{ leftArray: noteListData.leftArray, setBetterList }}
             key={note.id}
             id={note.id}
             top={note.top}

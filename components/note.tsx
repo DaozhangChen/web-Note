@@ -28,14 +28,14 @@ export default function Note(prop: Prop) {
         const replaceText = innerText.replaceAll(/\n/g, '<br/>')
         if (prop.addNote) {
             if ((e.target as HTMLDivElement).innerText) {
-                prop.addNote(data => ({ ...data, text: replaceText }))
+                prop.addNote({ height: (e.target as HTMLDivElement).clientHeight + 35, text: replaceText })
             }
         } else {
             setPatchNote(data => ({ ...data, text: replaceText }))
         }
     }
     const isNotFocus: FocusEventHandler = (e) => {
-        setPatchNote(data => ({ ...data, height: e.target.clientHeight + 25 }))
+        setPatchNote(data => ({ ...data, height: e.target.clientHeight + 35 }))
         setIsOnChange(false)
     }
     useEffect(() => {

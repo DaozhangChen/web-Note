@@ -8,13 +8,6 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    // const mockData = Mock.mock({
-    //     'data|20': [{
-    //         'id|+1': 1,
-    //         'text|1-100': '321',
-    //         'height|100-500': 100
-    //     }]
-    // })
     return new Promise((resolve, reject) => {
         if (req.method === "GET") {
             const token = req.headers.authorization?.split(' ')[1]

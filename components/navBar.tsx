@@ -24,6 +24,7 @@ export default function NavBar() {
         reactRoot?.current?.unmount()
     }
     useEffect(() => {
+        console.log(addNoteData)
         if (addNoteData.text !== '' && isClick) {
             fetch('/api/addNote', {
                 method: 'post', body: JSON.stringify(addNoteData),

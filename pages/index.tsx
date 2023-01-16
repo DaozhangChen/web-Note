@@ -42,7 +42,7 @@ const Home: NextPage = () => {
       meStoreFetch(jwt)
       fetchList(jwt)
     }
-    if (window.innerWidth) {
+    if (window.innerWidth >= 320) {
       setNoteListData(list => ({ ...list, width: window.innerWidth }))
       window.addEventListener('resize', () => {
         setNoteListData(list => ({ ...list, width: window.innerWidth }))

@@ -29,7 +29,6 @@ export default function NavBar() {
         setIsClick(false)
     }, [addNoteData, isClick, jwt, webAddNote])
 
-
     const addNote = () => {
         setAddNoteData({ text: '', height: 100 })
         const container = <>

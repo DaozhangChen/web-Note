@@ -15,12 +15,6 @@ interface noteListData {
   width: number,
   leftArray: number[]
 }
-type fetchData = {
-  noteId: number,
-  userId: number,
-  text: string,
-  height: number
-}
 
 const Home: NextPage = () => {
   const { noteList, deleteNote, fetchList } = useNoteStore()
@@ -42,10 +36,12 @@ const Home: NextPage = () => {
       meStoreFetch(jwt)
       fetchList(jwt)
     }
-    if (window.innerWidth >= 320) {
+    if (window.innerWidth) {
       setNoteListData(list => ({ ...list, width: window.innerWidth }))
       window.addEventListener('resize', () => {
-        setNoteListData(list => ({ ...list, width: window.innerWidth }))
+        if (window.innerWidth >= 315) {
+          setNoteListData(list => ({ ...list, width: window.innerWidth }))
+        }
       })
       window.addEventListener('storage', (e: StorageEvent) => {
         if (e.key === 'jwt') {
@@ -86,6 +82,7 @@ const Home: NextPage = () => {
         <NavBar />
         <div className={s.noteWrapper}>
           {betterList?.map(note => <Note
+            changeUi={{ leftArray: noteListData.leftArray, setBetterList }}
             key={note.id}
             id={note.id}
             top={note.top}

@@ -57,8 +57,6 @@ export const useNoteStore = create((set, get: () => storeData) => ({
             findArray.height = formData.height
             findArray.text = formData.text
         }
-        console.log(get().noteList)
     },
-
     reset: () => set({ noteList: [] })
 }))

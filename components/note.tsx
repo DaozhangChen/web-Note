@@ -12,6 +12,7 @@ interface Prop {
     onClick?: MouseEventHandler<HTMLDivElement>,
     changeText?: Dispatch<SetStateAction<{ id: number; text: string; height: number }[]>>
     addNote?: Dispatch<SetStateAction<addNoteData>>
+    changeUi?: any
 }
 export default function Note(prop: Prop) {
     const { patchNote: webPatchNote, syncPatchNote } = useNoteStore()
@@ -33,6 +34,7 @@ export default function Note(prop: Prop) {
         } else {
             setPatchNote(data => ({ ...data, height: (e.target as HTMLDivElement).clientHeight + 25, text: replaceText }))
         }
+
     }
     const isNotFocus: FocusEventHandler = (e) => {
         setPatchNote(data => ({ ...data, height: e.target.clientHeight + 25 }))

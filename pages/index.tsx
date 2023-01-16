@@ -23,7 +23,7 @@ type fetchData = {
 }
 
 const Home: NextPage = () => {
-  const { noteList, reset: resetNoteList, setNoteList, deleteNote } = useNoteStore()
+  const { noteList, deleteNote, fetchList } = useNoteStore()
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   const [jwt, setJwt] = useState<string>()
@@ -40,15 +40,7 @@ const Home: NextPage = () => {
     if (jwt) {
       setJwt(jwt)
       meStoreFetch(jwt)
-      fetch('/api/getList', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
-        .then((response) => { return response.json() })
-        .then(jsonData => {
-          const dataList: fetchData[] = jsonData.data
-          resetNoteList()
-          dataList.forEach((data) => {
-            setNoteList(data)
-          })
-        })
+      fetchList(jwt)
     }
     if (window.innerWidth) {
       setNoteListData(list => ({ ...list, width: window.innerWidth }))

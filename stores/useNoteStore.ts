@@ -5,6 +5,7 @@ type storeData = {
     noteList: baseList[],
     setNoteList: (data: fetchData) => void,
     deleteNote: (id: number, jwt: string) => void,
+    fetchList: (jwt: string) => void,
     reset: () => void
 }
 type fetchData = {
@@ -25,5 +26,16 @@ export const useNoteStore = create((set, get: () => storeData) => ({
         fetch('api/deleteNote', { method: 'delete', body: JSON.stringify(id), headers: { 'Authorization': `Bearer ${jwt}` } })
         return { noteList: newArray }
     }),
+    fetchList: (jwt: string) => {
+        fetch('/api/getList', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
+            .then((response) => { return response.json() })
+            .then(jsonData => {
+                const dataList: fetchData[] = jsonData.data
+                get().reset()
+                dataList.forEach((data) => {
+                    get().setNoteList(data)
+                })
+            })
+    },
     reset: () => set({ noteList: [] })
 }))

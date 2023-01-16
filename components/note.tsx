@@ -9,6 +9,7 @@ interface Prop {
     text?: string,
     id?: number,
     height?: number,
+    color?: string,
     onClick?: MouseEventHandler<HTMLDivElement>,
     changeText?: Dispatch<SetStateAction<{ id: number; text: string; height: number }[]>>
     addNote?: Dispatch<SetStateAction<addNoteData>>
@@ -53,7 +54,7 @@ export default function Note(prop: Prop) {
         }
     }, [patchNote, isOnChange, webPatchNote])
     return (
-        <div className={s.wrapper} style={{ top: prop.top, left: prop.left }}>
+        <div className={s.wrapper} style={{ top: prop.top, left: prop.left, backgroundColor: prop.color }}>
             <div className={s.navBar}>
                 <Image id={prop.id?.toString()} src="/close.svg" width={20} height={20} alt="close" priority property="true" onClick={prop.onClick} />
             </div>

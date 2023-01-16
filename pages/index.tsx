@@ -10,6 +10,7 @@ import s from '../styles/index.module.scss'
 import { NextPage } from 'next'
 import { useMeStore } from '../stores/useMeStore'
 import { useNoteStore } from '../stores/useNoteStore'
+import { randomColor } from '../helper/randomColor'
 
 interface noteListData {
   width: number,
@@ -82,6 +83,7 @@ const Home: NextPage = () => {
         <NavBar />
         <div className={s.noteWrapper}>
           {betterList?.map(note => <Note
+            color={randomColor[Math.floor(Math.random() * randomColor.length)]}
             key={note.id}
             id={note.id}
             top={note.top}

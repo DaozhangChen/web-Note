@@ -7,6 +7,7 @@ import { openLoginPage } from './loginPage'
 import { useMeStore } from '../stores/useMeStore'
 import { addNoteData } from '..'
 import { useNoteStore } from '../stores/useNoteStore'
+import { randomColor } from '../helper/randomColor'
 
 export default function NavBar() {
     const { userName, jwt } = useMeStore()
@@ -38,7 +39,7 @@ export default function NavBar() {
         const container = <>
             <div className={s.mask} onClick={maskClick} />
             <div className={s.noteWrapper} ref={refNote}>
-                <Note addNote={setAddNoteData} onClick={clickButton} />
+                <Note addNote={setAddNoteData} onClick={clickButton} color={randomColor[Math.floor(Math.random() * randomColor.length)]} />
             </div>
         </>
         const portalNote = ReactDOM.createPortal(container, document.body)

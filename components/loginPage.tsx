@@ -64,9 +64,6 @@ export default function LoginPage(prop: Prop) {
             })
         return true
     }
-    useEffect(() => {
-        console.log(errorMessage)
-    }, [errorMessage])
     return (
         createPortal(
             <>{

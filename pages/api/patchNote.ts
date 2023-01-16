@@ -53,7 +53,6 @@ export default function handler(
                 })
             }
         } else {
-            console.log('1')
             res.status(405).json({ error: '请求method不正确' })
             reject({ error: '请求方法不正确' })
         }

@@ -45,7 +45,6 @@ export default function NavBar() {
         const portalNote = ReactDOM.createPortal(container, document.body)
         const div = document.createElement('div')
         const root = createRoot(div)
-        console.log(root)
         reactRoot.current = root
         root.render(portalNote)
     }

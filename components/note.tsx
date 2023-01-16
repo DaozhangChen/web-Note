@@ -35,7 +35,6 @@ export default function Note(prop: Prop) {
         }
     }
     const isNotFocus: FocusEventHandler = (e) => {
-        console.dir(e.target.clientHeight)
         setPatchNote(data => ({ ...data, height: e.target.clientHeight + 25 }))
         setIsOnChange(false)
     }
@@ -44,7 +43,6 @@ export default function Note(prop: Prop) {
         if (!isOnChange && patchNote.text !== '' && jwt) {
             webPatchNote(patchNote, jwt)
         }
-        console.log(patchNote)
     }, [patchNote, isOnChange, webPatchNote])
     return (
         <div className={s.wrapper} style={{ top: prop.top, left: prop.left }}>

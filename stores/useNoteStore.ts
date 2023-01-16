@@ -1,8 +1,9 @@
 import { create } from "zustand";
-import { baseList } from "..";
+import { addNoteData, baseList } from "..";
 
 type storeData = {
     noteList: baseList[],
+    addNote: (formData: addNoteData, jwt: string) => void,
     setNoteList: (data: fetchData) => void,
     deleteNote: (id: number, jwt: string) => void,
     fetchList: (jwt: string) => void,
@@ -19,6 +20,14 @@ type fetchData = {
 
 export const useNoteStore = create((set, get: () => storeData) => ({
     noteList: [],
+    addNote: async (formData: addNoteData, jwt: string) => {
+        const response = await fetch('/api/addNote', {
+            method: 'post', body: JSON.stringify(formData),
+            headers: { 'Authorization': `Bearer ${jwt}` }
+        })
+        const jsonData = await response.json()
+        set({ noteList: [...get().noteList, { id: jsonData.data.insertId, text: formData.text, height: formData.height }] })
+    },
     setNoteList: (data: fetchData) => set(status => {
         return { noteList: [...status.noteList, { id: data.noteId, text: data.text, height: data.height }] }
     }),

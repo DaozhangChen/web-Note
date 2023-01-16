@@ -35,7 +35,7 @@ export default function Note(prop: Prop) {
         }
     }
     const isNotFocus: FocusEventHandler = (e) => {
-        setPatchNote(data => ({ ...data, height: e.target.clientHeight + 35 }))
+        setPatchNote(data => ({ ...data, height: e.target.clientHeight + 25 }))
         setIsOnChange(false)
     }
     useEffect(() => {

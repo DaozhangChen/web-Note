@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import s from '../styles/components/navBar.module.scss'
 import Note from './note'
@@ -6,12 +6,11 @@ import { createRoot, Root } from 'react-dom/client'
 import { openLoginPage } from './loginPage'
 import { useMeStore } from '../stores/useMeStore'
 import { addNoteData } from '..'
-
-
+import { useNoteStore } from '../stores/useNoteStore'
 
 export default function NavBar() {
-    const userName = useMeStore().userName
-    const jwt = useMeStore().jwt
+    const { userName, jwt } = useMeStore()
+    const { addNote: webAddNote } = useNoteStore()
     const reactRoot = useRef<Root>()
     const refNote = useRef<HTMLDivElement>(null)
     const [addNoteData, setAddNoteData] = useState<addNoteData>({ text: '', height: 100 })
@@ -24,15 +23,11 @@ export default function NavBar() {
         reactRoot?.current?.unmount()
     }
     useEffect(() => {
-        console.log(addNoteData)
         if (addNoteData.text !== '' && isClick) {
-            fetch('/api/addNote', {
-                method: 'post', body: JSON.stringify(addNoteData),
-                headers: { 'Authorization': `Bearer ${jwt}` }
-            })
+            webAddNote(addNoteData, jwt)
         }
         setIsClick(false)
-    }, [addNoteData, isClick, jwt])
+    }, [addNoteData, isClick, jwt, webAddNote])
 
 
     const addNote = () => {

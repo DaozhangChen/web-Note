@@ -29,7 +29,7 @@ export default function handler(
                                     } else {
                                         connection.query('insert into note value (?,?,?,?)', [0, userId, body.text, body.height], (err, data, fileds) => {
                                             if (err) throw err
-                                            res.status(200).json({ message: '添加成功' })
+                                            res.status(200).json({ data: data, message: '添加成功' })
                                             connection.end()
                                             resolve('添加成功')
                                         })

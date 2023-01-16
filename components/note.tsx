@@ -14,7 +14,7 @@ interface Prop {
     addNote?: Dispatch<SetStateAction<addNoteData>>
 }
 export default function Note(prop: Prop) {
-    const { patchNote: webPatchNote } = useNoteStore()
+    const { patchNote: webPatchNote, syncPatchNote } = useNoteStore()
     const [patchNote, setPatchNote] = useState<{ noteId: number, text: string, height: number }>({ noteId: 0, text: '', height: 0 })
     const [isOnChange, setIsOnChange] = useState(false)
     const onFocus: FocusEventHandler = (e) => {
@@ -31,13 +31,20 @@ export default function Note(prop: Prop) {
                 prop.addNote({ height: (e.target as HTMLDivElement).clientHeight + 35, text: replaceText })
             }
         } else {
-            setPatchNote(data => ({ ...data, text: replaceText }))
+            setPatchNote(data => ({ ...data, height: (e.target as HTMLDivElement).clientHeight + 25, text: replaceText }))
         }
     }
     const isNotFocus: FocusEventHandler = (e) => {
         setPatchNote(data => ({ ...data, height: e.target.clientHeight + 25 }))
         setIsOnChange(false)
     }
+    useEffect(() => {
+        if (patchNote.text === '') {
+            return
+        } else {
+            syncPatchNote(patchNote)
+        }
+    }, [patchNote, syncPatchNote])
     useEffect(() => {
         const jwt = localStorage.getItem('jwt')
         if (!isOnChange && patchNote.text !== '' && jwt) {

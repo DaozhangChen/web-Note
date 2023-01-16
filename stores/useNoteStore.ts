@@ -8,6 +8,7 @@ type storeData = {
     deleteNote: (id: number, jwt: string) => void,
     fetchList: (jwt: string) => void,
     patchNote: (formData: Omit<fetchData, | 'userId'>, jwt: string) => void,
+    syncPatchNote: (formData: Omit<fetchData, | 'userId'>) => void,
     reset: () => void
 }
 type fetchData = {
@@ -47,8 +48,17 @@ export const useNoteStore = create((set, get: () => storeData) => ({
                 })
             })
     },
-    patchNote: (formData: Omit<fetchData, | 'userId'>, jwt: string) => {
+    patchNote: (formData: Omit<fetchData, 'userId'>, jwt: string) => {
         fetch('/api/patchNote', { method: 'PATCH', body: JSON.stringify(formData), headers: { 'Authorization': `Bearer ${jwt}` } })
     },
+    syncPatchNote: (formData: Omit<fetchData, 'userId'>) => {
+        const findArray = get().noteList.find(list => list.id === formData.noteId)
+        if (findArray) {
+            findArray.height = formData.height
+            findArray.text = formData.text
+        }
+        console.log(get().noteList)
+    },
+
     reset: () => set({ noteList: [] })
 }))

@@ -23,20 +23,22 @@ type fetchData = {
 }
 
 const Home: NextPage = () => {
-  const noteList = useNoteStore().noteList
-  const setNoteList = useNoteStore().setNoteList
-  const resetNoteList = useNoteStore().reset
-  const deleteNote = useNoteStore().delectNote
+  const { noteList, reset: resetNoteList, setNoteList, deleteNote } = useNoteStore()
   const [betterList, setBetterList] = useState<betterList[]>()
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
+  const [jwt, setJwt] = useState<string>()
   const meStoreFetch = useMeStore(state => state.fetchMe)
+
   const deleteData: MouseEventHandler = (e) => {
     const id = (e.target as Element).id
-    deleteNote(+id)
+    if (jwt) {
+      deleteNote(+id, jwt)
+    }
   }
   useEffect(() => {
     const jwt = localStorage.getItem('jwt')
     if (jwt) {
+      setJwt(jwt)
       meStoreFetch(jwt)
       fetch('/api/getList', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
         .then((response) => { return response.json() })

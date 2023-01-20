@@ -7,6 +7,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 2;
 }
 
 .mainWrapper {
@@ -16,6 +17,7 @@
     transform: translate(-50%, -50%);
     width: 500px;
     height: 300px;
+    z-index: 4;
 
     & .title {
         height: 50px;
@@ -55,6 +57,7 @@
         padding: 30px 0;
 
         & .inputWrapper {
+
 
             & span {
                 position: absolute;

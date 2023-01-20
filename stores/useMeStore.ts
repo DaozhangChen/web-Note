@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { getPubNote } from "./useNoteStore";
 
 type storeData = {
     userId: number,
@@ -16,6 +17,7 @@ type Data = {
     error?: string
 }
 
+
 export const useMeStore = create((set, get: () => storeData) => ({
     userId: 0,
     userName: '',
@@ -23,7 +25,7 @@ export const useMeStore = create((set, get: () => storeData) => ({
     patchUserId: (newId: number) => set({ userId: newId }),
     patchUserName: (newUserName: string) => set({ userName: newUserName }),
     patchJwt: (newJwt: string) => set({ jwt: newJwt }),
-    reset: () => set({ userId: 0, userName: '' }),
+    reset: () => set({ userId: 0, userName: '', jwt: '' }),
     fetchMe: async (jwt) => {
         get().patchJwt(jwt)
         const response = await fetch('/api/me', { method: 'get', headers: { 'Authorization': `Bearer ${jwt}` } })
@@ -36,6 +38,7 @@ export const useMeStore = create((set, get: () => storeData) => ({
             }
         } else {
             get().reset()
+            getPubNote()
         }
     }
 }))

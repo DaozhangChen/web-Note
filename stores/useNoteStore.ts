@@ -8,7 +8,7 @@ type storeData = {
     deleteNote: (id: number, jwt: string) => void,
     fetchList: (jwt: string) => void,
     patchNote: (formData: Omit<fetchData, | 'userId'>, jwt: string) => void,
-    syncPatchNote: (formData: Omit<fetchData, | 'userId'>) => void,
+    syncPatchNote: (formData: Omit<fetchData, | 'userId'>) => void
     reset: () => void
 }
 type fetchData = {
@@ -58,5 +58,11 @@ export const useNoteStore = create((set, get: () => storeData) => ({
             findArray.text = formData.text
         }
     },
+
     reset: () => set({ noteList: [] })
 }))
+
+export const getPubNote = async () => {
+    const response = await (await fetch('/api/getPubList', { method: 'get' })).json()
+    console.log(response.data)
+}

@@ -12,7 +12,7 @@
 /.next/
 /out/
 .history
-
+/helper/connectDB.ts
 # production
 /build
 

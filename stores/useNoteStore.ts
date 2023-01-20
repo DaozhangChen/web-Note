@@ -18,7 +18,6 @@ type fetchData = {
     height: number
 }
 
-
 export const useNoteStore = create((set, get: () => storeData) => ({
     noteList: [],
     addNote: async (formData: addNoteData, jwt: string) => {
@@ -58,11 +57,10 @@ export const useNoteStore = create((set, get: () => storeData) => ({
             findArray.text = formData.text
         }
     },
-
     reset: () => set({ noteList: [] })
 }))
 
 export const getPubNote = async () => {
-    const response = await (await fetch('/api/getPubList', { method: 'get' })).json()
-    console.log(response.data)
+    const response = await (await fetch('/api/getPubNote', { method: 'get' })).json()
+    useNoteStore.setState({ noteList: [...response.data] })
 }

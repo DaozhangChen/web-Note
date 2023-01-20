@@ -42,9 +42,7 @@ export default function Note(prop: Prop) {
         setIsOnChange(false)
     }
     useEffect(() => {
-        if (patchNote.text === '') {
-            return
-        } else {
+        if (patchNote.text !== '') {
             syncPatchNote(patchNote)
         }
     }, [patchNote, syncPatchNote])
@@ -52,6 +50,8 @@ export default function Note(prop: Prop) {
         const jwt = localStorage.getItem('jwt')
         if (!isOnChange && patchNote.text !== '' && jwt) {
             webPatchNote(patchNote, jwt)
+            window.alert('修改成功')
+            location.reload()
         }
     }, [patchNote, isOnChange, webPatchNote])
     return (

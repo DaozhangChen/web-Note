@@ -50,7 +50,7 @@ export default function NavBar() {
     }
     return (
         <div className={s.wrapper}>
-            <button type="button" onClick={addNote}>添加标签</button>
+            <button type="button" onClick={addNote} style={jwt === '' ? { cursor: 'not-allowed' } : {}} disabled={jwt === ''}>添加标签</button>
             <div>
                 <span>{userName === '' ? '未登录' : userName}</span>
                 {

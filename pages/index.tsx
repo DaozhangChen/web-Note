@@ -23,10 +23,11 @@ const Home: NextPage = () => {
   const [noteListData, setNoteListData] = useState<noteListData>({ width: 100, leftArray: [0] })
   const [jwt, setJwt] = useState<string>()
   const meStoreFetch = useMeStore(state => state.fetchMe)
+  const { jwt: trueJwt } = useMeStore()
 
   const deleteData: MouseEventHandler = (e) => {
     const id = (e.target as Element).id
-    if (jwt) {
+    if (jwt && trueJwt) {
       deleteNote(+id, jwt)
     }
   }

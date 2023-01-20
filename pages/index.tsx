@@ -90,6 +90,7 @@ const Home: NextPage = () => {
             left={note.left}
             text={note.text}
             height={note.height}
+            zIndex={note.zIndex}
             onClick={deleteData} />)}
         </div>
       </main>

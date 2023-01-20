@@ -3,6 +3,7 @@ import { type } from "os"
 export interface betterList extends baseList {
     top: number
     left: number
+    zIndex?: number
 }
 export interface baseList {
     id: number

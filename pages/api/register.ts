@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { connectDB } from '../../helper/connectDB'
 
-type Data = {
-    name: string
-}
-
 export default function handler(
     req: NextApiRequest,
     res: NextApiResponse

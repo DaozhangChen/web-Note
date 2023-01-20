@@ -55,8 +55,8 @@ const Home: NextPage = () => {
     }
   }, [])
   const gapWidth = useMemo(() => {
-    const count = Math.floor((noteListData.width - 40) / 250)
-    return (noteListData.width - count * 250) / (count + 2)
+    const count = Math.floor((noteListData.width - 20) / 250)
+    return (noteListData.width - 20) - count * 250 / (count + 1)
   }, [noteListData])
   useEffect(() => {
     if (noteListData.width) {

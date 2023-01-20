@@ -10,7 +10,7 @@ export const returnNewArray = (list: baseList[], leftArray: number[], heightArra
             heightArray.push(10 + noteList.height)
             newArray.push(
                 {
-                    id: noteList.id,
+                    id: noteList.id || noteList.noteId || 0,
                     top: 10, left: leftArray[count],
                     text: noteList.text,
                     height: noteList.height,
@@ -23,7 +23,7 @@ export const returnNewArray = (list: baseList[], leftArray: number[], heightArra
             heightArray[i] += noteList.height + 10
             newArray.push(
                 {
-                    id: noteList.id,
+                    id: noteList.id || noteList.noteId || 0,
                     top: height,
                     left: leftArray[i],
                     text: noteList.text,

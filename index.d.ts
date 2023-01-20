@@ -9,6 +9,7 @@ export interface baseList {
     id: number
     text: string
     height: number
+    noteId?: number
 }
 export interface noteListData {
     width: number

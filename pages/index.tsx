@@ -79,7 +79,7 @@ const Home: NextPage = () => {
       </Head>
       <main className={s.wrapper}>
         <div className={s.background}>
-          <Image src="/background.svg" alt='背景图片' fill priority property="true" />
+          <Image src="/background.svg" alt='背景图片' fill priority property="true" blurDataURL='/background.png' placeholder='blur' />
         </div>
         <NavBar />
         <div className={s.noteWrapper}>

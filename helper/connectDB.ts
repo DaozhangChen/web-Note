@@ -4,7 +4,7 @@ export const connectDB = () => {
     const connection = mysql.createPool({
         host: 'localhost',
         user: 'root',
-        password: 'Bb15880493793.',
+        password: 'b15880493793.',
         database: 'list',
         connectionLimit: 10
     })

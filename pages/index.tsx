@@ -9,7 +9,7 @@ import { betterList } from '..'
 import s from '../styles/index.module.scss'
 import { NextPage } from 'next'
 import { useMeStore } from '../stores/useMeStore'
-import { useNoteStore } from '../stores/useNoteStore'
+import { getPubNote, useNoteStore } from '../stores/useNoteStore'
 import { randomColor } from '../helper/randomColor'
 
 interface noteListData {
@@ -37,6 +37,8 @@ const Home: NextPage = () => {
       setJwt(jwt)
       meStoreFetch(jwt)
       fetchList(jwt)
+    } else {
+      getPubNote()
     }
     if (window.innerWidth) {
       setNoteListData(list => ({ ...list, width: window.innerWidth }))
@@ -79,7 +81,7 @@ const Home: NextPage = () => {
       </Head>
       <main className={s.wrapper}>
         <div className={s.background}>
-          <Image src="/background.svg" alt='背景图片' fill priority property="true" blurDataURL='/background.png' placeholder='blur' />
+          <Image src="/background.png" alt='背景图片' fill priority property="true" blurDataURL='/background.png' placeholder='blur' />
         </div>
         <NavBar />
         <div className={s.noteWrapper}>
